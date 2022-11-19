@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import CustomText from './components/CustomText';
 
 const arr = [
@@ -105,10 +111,10 @@ const Root = () => {
   }, []);
 
   //ko can thiet render
-  const onChangeText = React.useCallback(textInput => {
+  const onChangeText = textInput => {
     console.log('123132');
     setInput(textInput);
-  }, []);
+  };
 
   const toggleSwitchPressed = React.useCallback(() => {
     const arrCopy = arrPass;
@@ -154,8 +160,6 @@ const Root = () => {
     setListCustomText([...sortedList]);
   };
 
-  console.log('listCustomText', listCustomText);
-
   const textTruncate = React.useMemo(() => {
     console.log('123132321');
     return input + 'abc';
@@ -170,13 +174,18 @@ const Root = () => {
         flex: 1,
         backgroundColor: 'white',
       }}>
-      {/* <View style={{flexDirection: 'row'}}>
+      <ScrollView
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+        }}>
+        {/* <View style={{flexDirection: 'row'}}>
         <Text prop1={'a'}>text1</Text>
         <Text prop1={'a'}>text2</Text>
         <CommonHeaderBar />
       </View> */}
 
-      {/* <Switch
+        {/* <Switch
         trackColor={{false: '#767577', true: '#81b0ff'}}
         thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
         ios_backgroundColor="#3e3e3e"
@@ -190,7 +199,7 @@ const Root = () => {
         textTruncate={textTruncate}
         toggleSwitch={toggleSwitch}
       /> */}
-      {/* <FlatList
+        {/* <FlatList
         data={dataFlatList}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item, index}) => {
@@ -202,30 +211,36 @@ const Root = () => {
           setDataFlatList([...dataFlatList, ...arr]);
         }}
       /> */}
-      <TouchableOpacity style={{marginVertical: 10}} onPress={addToFirst}>
-        <Text style={styles.fontSizeText}>Add new CustomText to first</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={{marginVertical: 10}} onPress={addToLast}>
-        <Text style={styles.fontSizeText}>Add new CustomText to last</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{marginVertical: 10}}
-        onPress={sortEarliestTimeAdd}>
-        <Text style={styles.fontSizeText}>Sort earliest by day add</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{marginVertical: 10}}
-        onPress={sortLatestTimeAdd}>
-        <Text style={styles.fontSizeText}>Sort latest by day add</Text>
-      </TouchableOpacity>
-      {listCustomText.map((eachCustomText, index) => {
-        return (
-          <CustomText
-            key={eachCustomText.id}
-            timeAdd={eachCustomText.timeAdd}
-          />
-        );
-      })}
+        <Text style={styles.fontSizeText}>{listCustomText.length}</Text>
+
+        <TouchableOpacity style={{marginVertical: 10}} onPress={addToFirst}>
+          <Text style={styles.fontSizeText}>Add new CustomText to first</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{marginVertical: 10}} onPress={addToLast}>
+          <Text style={styles.fontSizeText}>Add new CustomText to last</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{marginVertical: 10}}
+          onPress={sortEarliestTimeAdd}>
+          <Text style={styles.fontSizeText}>Sort earliest by day add</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{marginVertical: 10}}
+          onPress={sortLatestTimeAdd}>
+          <Text style={styles.fontSizeText}>Sort latest by day add</Text>
+        </TouchableOpacity>
+        {listCustomText.map((eachCustomText, index) => {
+          return (
+            <CustomText
+              key={index}
+              keyPass={index}
+              onChangeText={onChangeText}
+              // key={eachCustomText.id}
+              timeAdd={eachCustomText.timeAdd}
+            />
+          );
+        })}
+      </ScrollView>
     </SafeAreaView>
   );
 };
